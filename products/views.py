@@ -1,7 +1,7 @@
 from rest_framework.decorators import action
 from rest_framework import viewsets
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Product, Supplier
+from .serializers import ProductSerializer, ProductStockSerializer, SupplierSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -20,3 +20,8 @@ class ProductViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         # <-- ต้อง login ก่อน
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SupplierViewSet(viewsets.ModelViewSet):
+    queryset = Supplier.objects.all().order_by('-created_at')
+    serializer_class = SupplierSerializer
+    permission_classes = [IsAuthenticated]
