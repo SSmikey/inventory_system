@@ -29,3 +29,18 @@ class Supplier(models.Model):
 supplier = models.ForeignKey(
     Supplier, on_delete=models.SET_NULL, null=True, blank=True, related_name="products"
 )
+
+class Transaction(models.Model):
+    TRANSACTION_TYPES = (
+        ('inbound', 'Inbound'),   # สินค้าเข้า
+        ('outbound', 'Outbound'), # สินค้าออก
+    )
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="transactions")
+    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
+    quantity = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    note = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.transaction_type} - {self.product.name} ({self.quantity})"
