@@ -1,3 +1,4 @@
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import action
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -19,12 +20,17 @@ from .serializers import (
     TransactionSerializer
 )
 
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 20
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all().order_by('-created_at')
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
-
+    pagination_class = StandardResultsSetPagination
+    
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_class = ProductFilter
     search_fields = ['id', 'name', 'description']
@@ -81,6 +87,13 @@ class TransactionViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = TransactionFilter
 
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            permission_classes = [IsManagerOrAdmin]  # manager, admin
+        else:  # list, retrieve
+            permission_classes = [IsStaffOrHigher]
+        return [p() for p in permission_classes]
+
     def get_queryset(self):
         queryset = super().get_queryset()
         product_id = self.request.query_params.get('product')
@@ -132,4 +145,3 @@ class TransactionViewSet(viewsets.ModelViewSet):
             data[p][r['transaction_type']] = r['total_qty']
 
         return Response(data)
-    
