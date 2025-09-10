@@ -10,6 +10,7 @@ from .models import Product, Supplier, Transaction
 from django_filters.rest_framework import DjangoFilterBackend 
 from rest_framework import filters
 from .filters import ProductFilter, TransactionFilter
+from users.permissions import IsAdmin, IsManagerOrAdmin, IsStaffOrHigher
 
 from .serializers import (
     ProductSerializer,
@@ -27,6 +28,15 @@ class ProductViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_class = ProductFilter
     search_fields = ['id', 'name', 'description']
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            permission_classes = [IsManagerOrAdmin]  # manager, admin
+        elif self.action in ['update_stock']:
+            permission_classes = [IsStaffOrHigher]   # staff ก็ทำได้
+        else:
+            permission_classes = [IsStaffOrHigher]  # ทุกคนดูได้
+        return [p() for p in permission_classes]
 
     @action(detail=True, methods=['patch'], permission_classes=[IsAuthenticated], url_path='update_stock')
     def update_stock(self, request, pk=None):
@@ -122,3 +132,4 @@ class TransactionViewSet(viewsets.ModelViewSet):
             data[p][r['transaction_type']] = r['total_qty']
 
         return Response(data)
+    

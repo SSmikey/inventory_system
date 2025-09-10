@@ -8,5 +8,16 @@ class User(AbstractUser):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
+    ROLE_CHOICES = (
+        ('admin', 'Admin'),
+        ('manager', 'Manager'),
+        ('staff', 'Staff'),
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='staff')
+
     def __str__(self):
-        return str(self.username)
+        return f"{self.username} ({self.role})"
+    
+    
+
+    
