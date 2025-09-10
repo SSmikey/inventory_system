@@ -2,11 +2,15 @@ from rest_framework.decorators import action
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import filters
 from django.db.models import Sum
-from rest_framework.decorators import api_view, permission_classes
 from django.utils.dateparse import parse_date
 from django.db.models.functions import TruncDay, TruncMonth
 from .models import Product, Supplier, Transaction
+from django_filters.rest_framework import DjangoFilterBackend 
+from rest_framework import filters
+from .filters import ProductFilter, TransactionFilter
+
 from .serializers import (
     ProductSerializer,
     ProductStockSerializer,
@@ -19,6 +23,10 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all().order_by('-created_at')
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
+
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = ProductFilter
+    search_fields = ['id', 'name', 'description']
 
     @action(detail=True, methods=['patch'], permission_classes=[IsAuthenticated], url_path='update_stock')
     def update_stock(self, request, pk=None):
@@ -59,6 +67,9 @@ class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all().order_by('-created_at')
     serializer_class = TransactionSerializer
     permission_classes = [IsAuthenticated]
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TransactionFilter
 
     def get_queryset(self):
         queryset = super().get_queryset()
