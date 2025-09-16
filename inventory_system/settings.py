@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('django-insecure-&eth7kyt4zrnlme-jprmnlddl=l5$c(8_rc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["inventory-app.vercel.app"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
