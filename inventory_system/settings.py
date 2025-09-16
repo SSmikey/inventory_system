@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-&eth7kyt4zrnlme-jprmnlddl=l5$c(8_rcrw@-3e16%k*4hal'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -81,11 +82,11 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',  # จาก Supabase
-        'USER': 'postgres',  # จาก Supabase
-        'PASSWORD': '.zhxPB+Nspz2@9S',  # จาก Supabase
-        'HOST': 'db.eylpsfkbrahmhlonvvcg.supabase.co',  # จาก Supabase
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME', 'postgres'),  # จาก Supabase
+        'USER': os.environ.get('DB_USER', 'postgres'),  # จาก Supabase
+        'PASSWORD': os.environ.get('DB_PASSWORD', '.zhxPB+Nspz2@9S'),  # จาก Supabase
+        'HOST': os.environ.get('DB_HOST', 'db.eylpsfkbrahmhlonvvcg.supabase.co'),  # จาก Supabase
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -124,7 +125,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
