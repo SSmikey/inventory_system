@@ -8,10 +8,13 @@
     }
   ],
   "routes": [
-    { "src": "/static/(.*)", "dest": "/static/$1" },
-    { "src": "/(.*)", "dest": "inventory_system/wsgi.py" }
-  ],
-  "env": {
-    "PYTHONPATH": "."
-  }
+    { 
+      "src": "/static/(.*)", 
+      "dest": "/static/$1" 
+    },
+    { 
+      "src": "/(.*)", 
+      "dest": "inventory_system/wsgi.py" 
+    }
+  ]
 }
