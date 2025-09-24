@@ -38,12 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders'
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',
     'products',
     'users',
-    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -150,3 +150,5 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # เปลี่ยนเป็น 1 ชั่วโมง
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
