@@ -4,17 +4,23 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role']
 
+
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password])
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'first_name', 'last_name']
+        fields = ['username', 'email', 'password','first_name', 'last_name', 'role']
+        extra_kwargs = {
+            'role': {'default': 'staff'}  # ถ้าไม่ส่ง role จะใช้ staff
+        }
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -27,7 +33,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
 User = get_user_model()
+
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
