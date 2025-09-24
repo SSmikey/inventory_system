@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'postgres'),  # จาก Supabase
-        'USER': os.environ.get('DB_USER', 'postgres'),  # จาก Supabase
+        'NAME': os.environ.get('DB_NAME', 'postgres.eylpsfkbrahmhlonvvcg'),  # จาก Supabase
+        'USER': os.environ.get('DB_USER', 'postgres.eylpsfkbrahmhlonvvcg'),  # จาก Supabase
         'PASSWORD': os.environ.get('DB_PASSWORD', '.zhxPB+Nspz2@9S'),  # จาก Supabase
-        'HOST': os.environ.get('DB_HOST', 'db.eylpsfkbrahmhlonvvcg.supabase.co'),  # จาก Supabase
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'HOST': os.environ.get('DB_HOST', 'aws-1-ap-southeast-1.pooler.supabase.com'),  # จาก Supabase
+        'PORT': os.environ.get('DB_PORT', '6543'),
     }
 }
 
