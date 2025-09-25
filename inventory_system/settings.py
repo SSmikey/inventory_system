@@ -27,8 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','django-insecure-&eth7kyt4zrnlme-jprmnl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ["*"]
-
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
 # Application definition
 
@@ -84,9 +83,7 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get("DATABASE_URL")
-    )
+    'default': dj_database_url.config(default=os.environ.get('postgresql://inven_db_user:qn5SkxzDyAxfKCpzOpMkWqjdVM4WyPdS@dpg-d3adob0dl3ps73enjjbg-a/inven_db'))
 }
 
 
