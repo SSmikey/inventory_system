@@ -27,7 +27,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY','django-insecure-&eth7kyt4zrnlme-jprmnl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+ALLOWED_HOSTS = [
+    'inventory-system.onrender.com',  # ชื่อ service ของคุณ
+    'localhost',
+    '127.0.0.1',
+    '*'  # สำหรับ development เท่านั้น
+]
 
 # Application definition
 
@@ -87,10 +92,11 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 # Password validation
