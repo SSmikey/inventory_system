@@ -84,17 +84,18 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # DATABASES = {
-#     'default': dj_database_url.config(default=os.environ.get('postgresql://inven_db_user:qn5SkxzDyAxfKCpzOpMkWqjdVM4WyPdS@dpg-d3adob0dl3ps73enjjbg-a/inven_db'))
+#     'default': dj_database_url.config(
+#         default=os.environ.get('postgresql://postgres.heinkndawnqdtrzvjpie:[.zhxPB+Nspz2@9S]@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres'),
+#         conn_max_age=600,
+#         ssl_require=True
+#     )
 # }
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('postgresql://postgres.heinkndawnqdtrzvjpie:[.zhxPB+Nspz2@9S]@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres'),  # ต้องตั้ง DATABASE_URL ใน Environment Variable
-        conn_max_age=600,   # สำหรับ connection pool
-        ssl_require=True    # Supabase ต้องใช้ SSL
+        default="postgresql://postgres.heinkndawnqdtrzvjpie:.zhxPB+Nspz2@9S@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres"
     )
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
