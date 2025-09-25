@@ -7,3 +7,4 @@ gunicorn
 whitenoise
 drf-yasg
 django-cors-headers
+dj-database-url

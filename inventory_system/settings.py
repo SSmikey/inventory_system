@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY','django-insecure-&eth7kyt4zrnlme-jprmnlddl=l5$c(8_rcrw@-3e16%k*4hal')
 # SECRET_KEY = 'django-insecure-&eth7kyt4zrnlme-jprmnlddl=l5$c(8_rcrw@-3e16%k*4hal'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False   
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ["*"]
 
@@ -83,15 +84,11 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'postgres.eylpsfkbrahmhlonvvcg'),  # จาก Supabase
-        'USER': os.environ.get('DB_USER', 'postgres.eylpsfkbrahmhlonvvcg'),  # จาก Supabase
-        'PASSWORD': os.environ.get('DB_PASSWORD', '.zhxPB+Nspz2@9S'),  # จาก Supabase
-        'HOST': os.environ.get('DB_HOST', 'aws-1-ap-southeast-1.pooler.supabase.com'),  # จาก Supabase
-        'PORT': os.environ.get('DB_PORT', '6543'),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL")
+    )
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
