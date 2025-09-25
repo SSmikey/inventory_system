@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 import dj_database_url
 import os
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -82,6 +83,10 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.environ.get('postgresql://inven_db_user:qn5SkxzDyAxfKCpzOpMkWqjdVM4WyPdS@dpg-d3adob0dl3ps73enjjbg-a/inven_db'))
+# }
 
 DATABASES = {
     'default': dj_database_url.config(
