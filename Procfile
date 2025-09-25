@@ -1,1 +1,0 @@
-web: inventory_system.wsgi:application
