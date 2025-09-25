@@ -1,1 +1,1 @@
-web: inventory_system.wsgi:app
+web: inventory_system.wsgi:application
