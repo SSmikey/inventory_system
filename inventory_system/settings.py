@@ -85,16 +85,19 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 
 # DATABASES = {
 #     'default': dj_database_url.config(
-#         default=os.environ.get('postgresql://postgres.heinkndawnqdtrzvjpie:[.zhxPB+Nspz2@9S]@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres'),
-#         conn_max_age=600,
-#         ssl_require=True
+#         default=os.environ.get("postgresql://postgres.heinkndawnqdtrzvjpie:[.zhxPB+Nspz2@9S]@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres")
 #     )
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default="postgresql://postgres.heinkndawnqdtrzvjpie:.zhxPB+Nspz2@9S@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres"
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.heinkndawnqdtrzvjpie',
+        'PASSWORD': '.zhxPB+Nspz2@9S',
+        'HOST': 'aws-1-ap-southeast-1.pooler.supabase.com',
+        'PORT': '6543',
+    }
 }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
