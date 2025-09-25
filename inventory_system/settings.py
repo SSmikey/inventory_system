@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import dj_database_url
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY','django-insecure-&eth7kyt4zrnlme-jprmnlddl=l5$c(8_rcrw@-3e16%k*4hal')
 # SECRET_KEY = 'django-insecure-&eth7kyt4zrnlme-jprmnlddl=l5$c(8_rcrw@-3e16%k*4hal'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False   
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'   
 
 ALLOWED_HOSTS = ["*"]
 
@@ -83,14 +84,11 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'postgres.eylpsfkbrahmhlonvvcg'),  # จาก Supabase
-        'USER': os.environ.get('DB_USER', 'postgres.eylpsfkbrahmhlonvvcg'),  # จาก Supabase
-        'PASSWORD': os.environ.get('DB_PASSWORD', '.zhxPB+Nspz2@9S'),  # จาก Supabase
-        'HOST': os.environ.get('DB_HOST', 'aws-1-ap-southeast-1.pooler.supabase.com'),  # จาก Supabase
-        'PORT': os.environ.get('DB_PORT', '6543'),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('postgresql://postgres.heinkndawnqdtrzvjpie:[.zhxPB+Nspz2@9S]@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres'),  # ต้องตั้ง DATABASE_URL ใน Environment Variable
+        conn_max_age=600,   # สำหรับ connection pool
+        ssl_require=True    # Supabase ต้องใช้ SSL
+    )
 }
 
 # Password validation
@@ -152,3 +150,7 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Supabase Client (ถ้าจะใช้)
+SUPABASE_URL = os.environ.get("https://heinkndawnqdtrzvjpie.supabase.co")
+SUPABASE_KEY = os.environ.get("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlaW5rbmRhd25xZHRyenZqcGllIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1ODc5MDc1NCwiZXhwIjoyMDc0MzY2NzU0fQ.0ZAhEibHUL3qDOzVIhR4LgHI0hJ-64jd4QNFL_14xL4")
