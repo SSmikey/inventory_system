@@ -92,11 +92,11 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.heinkndawnqdtrzvjpie',
-        'PASSWORD': '.zhxPB+Nspz2@9S',
-        'HOST': 'aws-1-ap-southeast-1.pooler.supabase.com',
-        'PORT': '6543',
+        'NAME': os.environ.get('NAME','postgres'),
+        'USER': os.environ.get('USER','postgres.heinkndawnqdtrzvjpie'),
+        'PASSWORD': os.environ.get('PASSWORD','.zhxPB+Nspz2@9S'),
+        'HOST': os.environ.get('HOST','aws-1-ap-southeast-1.pooler.supabase.com'),
+        'PORT': os.environ.get('PORT','6543'),
     }
 }
 # Password validation
