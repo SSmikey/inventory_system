@@ -1,1 +1,1 @@
-web: gunicorn inventory_system.wsgi
+web: inventory_system.wsgi:application
